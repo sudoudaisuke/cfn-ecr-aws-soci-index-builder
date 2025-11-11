@@ -14,6 +14,9 @@ WORKDIR /build
 
 COPY . .
 
-RUN make -f Makefile
+RUN mkdir -p /tmp/go-cache /tmp/go-tmp && \
+    GOCACHE=/tmp/go-cache GOTMPDIR=/tmp/go-tmp \
+    make -f Makefile && \
+    rm -rf /tmp/go-cache /tmp/go-tmp
 
 CMD mkdir -p /output/ && mv /build/soci_index_generator_lambda.zip /output/
